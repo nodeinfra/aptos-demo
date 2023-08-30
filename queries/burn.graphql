@@ -1,0 +1,5 @@
+query MyQuery {
+  token_activities_v2(where: {type: {_eq: "0x3::token::BurnTokenEvent"}}) {
+    type
+  }
+}
