@@ -8,7 +8,7 @@ from display_functions import display_box
 
 st.title("Nodeinfra Aptos GraphQL")
 
-tables = ['Overview', 'thala', 'test3', 'test4', 'testestsafcsd'] 
+tables = ['Overview', 'thala'] 
 selected_table = None
 
 for table in tables:
