@@ -1,0 +1,6 @@
+query MyQuery {
+  events {
+    type
+  }
+}
+
