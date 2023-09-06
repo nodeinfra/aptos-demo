@@ -9,7 +9,7 @@ from display_functions import display_box
 st.title("Nodeinfra Aptos GraphQL")
 
 tables = ['Overview', 'thala', 'topaz', 'msafe'] 
-selected_table = None
+selected_table = 'Overview'
 
 for table in tables:
     if st.sidebar.button(table):
