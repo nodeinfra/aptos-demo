@@ -1,6 +1,8 @@
 query MyQuery {
-  token_activities_v2 {
-    type
+  current_token_ownerships_v2_aggregate(distinct_on: token_data_id) {
+    aggregate {
+      count(distinct: true)
+    }
   }
 }
 

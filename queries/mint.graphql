@@ -1,5 +1,10 @@
 query MyQuery {
-  token_activities_v2(where: {type: {_eq: "0x3::token::MintTokenEvent"}}) {
-    type
+  token_activities_v2_aggregate(
+    where: {type: {_eq: "0x3::token::MintTokenEvent"}}
+  ) {
+    aggregate {
+      count(distinct: true)
+    }
   }
 }
+

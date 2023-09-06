@@ -1,5 +1,8 @@
 query MyQuery {
-  account_transactions {
+  account_transactions (
+    limit: 1000
+    order_by: {inserted_at: desc}
+  ) {
     account_address
   }
 }

@@ -1,5 +1,8 @@
 query MyQuery {
-  events {
+  events (
+    limit: 1000
+    order_by: {inserted_at: desc}
+  ) {
     type
   }
 }

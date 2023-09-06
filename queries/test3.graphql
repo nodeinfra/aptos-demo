@@ -1,6 +1,0 @@
-query MyQuery {
-  account_transactions {
-    account_address
-  }
-}
-

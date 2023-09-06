@@ -1,14 +1,14 @@
 query MyQuery {
-  events (
-    where: {account_address: {_eq: "0x6f986d146e4a90b828d8c12c14b6f4e003fdff11a8eecceceb63744363eaac01"}}
+  events(
+    where: {account_address: {_eq: "0x2c7bccf7b31baf770fdbcc768d9e9cb3d87805e255355df5db32ac9a669010a2"}}
     order_by: {inserted_at: desc}
     limit: 1000
   ) {
     type
     account_address
-    data
     creation_number
     event_index
+    data
     sequence_number
     transaction_block_height
     transaction_version
