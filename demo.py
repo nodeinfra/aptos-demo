@@ -20,8 +20,8 @@ if selected_table == 'Overview' :
 
     tasks = [
         ('Top Accounts', getTopAccount),
-        ('Top Module', getTopModudle),
-        ('Top Contract', getTopContracts),
+        ('Popular Module (1000 events)', getTopModudle),
+        ('Popular Contract (1000 events)', getTopContracts),
         ('Number of Minted', getNumberOfMint),
         ('Number of Burned', getNumberOfBurn),
         ('Number of NFTs', getNumberOfNfts)
