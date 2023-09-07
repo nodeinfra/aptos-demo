@@ -16,21 +16,18 @@ def getTopAccount() :
 def getNumberOfNfts() :
     query = load_query('nfts.graphql')
     data = fetch_graphql_data(query)
-    print(data)
 
     return data['current_token_ownerships_v2_aggregate']['aggregate']['count'], query
 
 def getNumberOfMint() :
     query = load_query('mint.graphql')
     data = fetch_graphql_data(query)
-    print(data)
 
     return data['token_activities_v2_aggregate']['aggregate']['count'], query
 
 def getNumberOfBurn() :
     query = load_query('burn.graphql')
     data = fetch_graphql_data(query)
-    first_key = list(data.keys())[0]
 
     return data['token_activities_v2_aggregate']['aggregate']['count'], query
 
