@@ -5,13 +5,8 @@ from collections import Counter
 def getTopAccount() :
     query = load_query('account.graphql')
     data = fetch_graphql_data(query)
-    first_key = list(data.keys())[0]
 
-    addresses = [item['account_address'] for item in data[first_key]]
-    counter = Counter(addresses)
-
-    top_account, _ = counter.most_common(1)[0]
-    return top_account, query
+    return data["account_transactions_aggregate"]["aggregate"]["max"]["account_address"], query
 
 def getNumberOfNfts() :
     query = load_query('nfts.graphql')

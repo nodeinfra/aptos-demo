@@ -1,9 +1,10 @@
 query MyQuery {
-  account_transactions (
-    limit: 1000
-    order_by: {inserted_at: desc}
-  ) {
-    account_address
+  account_transactions_aggregate {
+    aggregate {
+      max {
+        account_address
+      }
+    }
   }
 }
 
