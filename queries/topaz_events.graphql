@@ -1,0 +1,8 @@
+query MyQuery {
+  events(
+    where: {account_address: {_eq: "0x2c7bccf7b31baf770fdbcc768d9e9cb3d87805e255355df5db32ac9a669010a2"}}
+    distinct_on: type
+  ) {
+    type
+  }
+}

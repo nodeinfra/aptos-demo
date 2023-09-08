@@ -25,3 +25,17 @@ def display_box(title, value, query):
     </div>
     """
     st.markdown(box, unsafe_allow_html=True)
+
+def wrap_text_by_char_count(text, char_limit):
+    words = text.split()
+    lines, current_line = [], words[0]
+
+    for word in words[1:]:
+        if len(current_line) + len(word) + 1 > char_limit:
+            lines.append(current_line)
+            current_line = word
+        else:
+            current_line += ' ' + word
+
+    lines.append(current_line)
+    return '\n'.join(lines)
