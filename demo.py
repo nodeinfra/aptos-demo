@@ -25,7 +25,8 @@ if st.session_state.selected_table == 'Overview' :
     st.title("Overview")
     st.write("### If you want to get Aptos DATA")
     st.write("### Try to use our GraphQL ENDPOINT")
-    st.write("https://aptos-mainnet.nodeinfra.com/indexer")
+    st.write("## Docs")
+    st.write("https://docs.nodeinfra.com")
 
     query = load_query('example.graphql')
     data = fetch_graphql_data(query, 'https://aptos-mainnet.nodeinfra.com/indexer')
