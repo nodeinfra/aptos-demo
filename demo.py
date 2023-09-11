@@ -1,9 +1,13 @@
 import streamlit as st
 import pandas as pd
+from datetime import datetime, timedelta
+import pytz
 
 from data_functions import getNumberOfBurn, getNumberOfMint, getNumberOfNfts, getTopAccount, getTopModudle, getTopContracts
-from graphql_functions import load_query, fetch_graphql_data, get_event_data_query
+from graphql_functions import load_query, fetch_graphql_data, get_event_data_query, get_volume_data_query
 from display_functions import display_box, wrap_text_by_char_count
+
+utc_timezone = pytz.timezone('UTC')
 
 st.title("Nodeinfra Aptos GraphQL")
 
@@ -49,12 +53,61 @@ elif st.session_state.selected_table == 'Statistics' :
         value, query = func()
         display_box(label, value, query)
 
+elif st.session_state.selected_table == 'thala' :
+    st.title(st.session_state.selected_table)
+    st.session_state.selected_event = None
+    query = load_query(st.session_state.selected_table + '_events.graphql')
+
+    data = fetch_graphql_data(query, "https://aptos-mainnet.nodeinfra.com/indexer")
+    first_key = list(data.keys())[0]
+
+    event_types = [event['type'] for event in data[first_key]]
+    event_types.insert(0, 'Volume')
+
+    st.session_state.selected_event = st.sidebar.selectbox('Choose a type:', event_types)
+    
+    if st.session_state.selected_event == 'Volume' :
+        current_time = datetime.now(utc_timezone)
+        time_24_hours_ago = current_time - timedelta(hours=24)
+        formatted_time = time_24_hours_ago.strftime("%Y-%m-%d %H:%M:%S.%f")
+
+        query = get_volume_data_query(formatted_time)
+        data = fetch_graphql_data(query, "https://aptos-mainnet.nodeinfra.com/indexer")
+
+        events_data = [event["data"] for event in data["events"]]
+
+        df = pd.DataFrame(events_data)
+        df['amount'] = df['amount'].astype(int)
+        total_amount = df['amount'].sum()
+
+        st.write("### GraphQL Query:")
+        st.code(query)
+        st.write("### Trading Volume (24h)")
+        st.write("###", total_amount)
+
+
+    elif st.session_state.selected_event != None :
+        query = get_event_data_query(addresses[st.session_state.selected_table], st.session_state.selected_event)
+        data = fetch_graphql_data(query, "https://aptos-mainnet.nodeinfra.com/indexer")
+
+        events_data = [event["data"] for event in data["events"]]
+
+        df = pd.DataFrame(events_data)
+
+        text = f'You selected {st.session_state.selected_event}'
+        wrapped_text = wrap_text_by_char_count(text, 20)
+        st.write(f'### {wrapped_text}')
+
+        st.write("### GraphQL Query:")
+        st.code(query)
+        st.write(df)
+
 elif st.session_state.selected_table != None : 
     st.title(st.session_state.selected_table)
     st.session_state.selected_event = None
     query = load_query(st.session_state.selected_table + '_events.graphql')
     print(query)
-    data = fetch_graphql_data(query, "https://indexer.mainnet.aptoslabs.com/v1/graphql")
+    data = fetch_graphql_data(query, "https://aptos-mainnet.nodeinfra.com/indexer")
     first_key = list(data.keys())[0]
 
     event_types = [event['type'] for event in data[first_key]]
@@ -63,7 +116,7 @@ elif st.session_state.selected_table != None :
     
     if st.session_state.selected_event != None :
         query = get_event_data_query(addresses[st.session_state.selected_table], st.session_state.selected_event)
-        data = fetch_graphql_data(query, "https://indexer.mainnet.aptoslabs.com/v1/graphql")
+        data = fetch_graphql_data(query, "https://aptos-mainnet.nodeinfra.com/indexer")
 
         events_data = [event["data"] for event in data["events"]]
 

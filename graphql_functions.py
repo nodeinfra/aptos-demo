@@ -28,7 +28,6 @@ def fetch_graphql_data(query, ENDPOINT):
         }
     response = requests.post(ENDPOINT, json={"query": query}, headers=headers)
     if response.status_code == 200:
-        # print(response.json())
         return response.json()['data']
     else:
         # if 'errors' in response.json():
@@ -46,9 +45,22 @@ def get_event_data_query(address, type) :
         query MyQuery {{
             events(
                 where: {{
-                account_address: {{_eq: "{address}"}},
-                type: {{_eq: "{type}"}}
-                }}
+                    account_address: {{_eq: "{address}"}},
+                    type: {{_eq: "{type}"}}
+                }},
+                limit: 1000
+            ) {{
+                data
+            }}
+        }}
+    """
+    return query
+
+def get_volume_data_query(now) :
+    query = f"""
+        query MyQuery {{
+            events(
+                where: {{account_address: {{_in: ["0x6970b4878c3aea96732be3f31c2dded12d94d9455ff0c76c67d84859dce35136", "0x6b3720cd988adeaf721ed9d4730da4324d52364871a68eac62b46d21e4d2fa99", "0x6f986d146e4a90b828d8c12c14b6f4e003fdff11a8eecceceb63744363eaac01", "0x092e95ed77b5ac815d3fbc2227e76db238339e9ca43ace45031ec2589bea5b8c", "0x48271d39d0b05bd6efca2278f22277d6fcc375504f9839fd73f74ace240861af", "0x4dcae85fc5559071906cd5c76b7420fcbb4b0a92f00ab40ffc394aadbbff5ee9", "0x4dcae85fc5559071906cd5c76b7420fcbb4b0a92f00ab40ffc394aadbbff5ee9"]}}, type: {{_eq: "0x1::coin::DepositEvent"}}, inserted_at: {{_gte: "{now}"}}}}
             ) {{
                 data
             }}
