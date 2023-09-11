@@ -7,7 +7,7 @@ from display_functions import display_box, wrap_text_by_char_count
 
 st.title("Nodeinfra Aptos GraphQL")
 
-tables = ['Overview', 'thala', 'topaz', 'msafe'] 
+tables = ['Overview', 'Statistics', 'thala', 'topaz', 'msafe'] 
 addresses = {
     'thala': '0x6f986d146e4a90b828d8c12c14b6f4e003fdff11a8eecceceb63744363eaac01',
     'msafe': '0xaa90e0d9d16b63ba4a289fb0dc8d1b454058b21c9b5c76864f825d5c1f32582e',
@@ -23,6 +23,19 @@ for table in tables:
 
 if st.session_state.selected_table == 'Overview' :
     st.title("Overview")
+    st.write("### If you want to get Aptos DATA")
+    st.write("### Try to use our GraphQL ENDPOINT")
+    st.write("https://aptos-mainnet.nodeinfra.com/indexer")
+
+    query = load_query('example.graphql')
+    data = fetch_graphql_data(query, 'https://aptos-mainnet.nodeinfra.com/indexer')
+
+    st.write("### Example")
+    st.code(query)
+    st.json(data)
+
+elif st.session_state.selected_table == 'Statistics' :
+    st.title("Statistics")
 
     tasks = [
         ('Top Accounts', getTopAccount),

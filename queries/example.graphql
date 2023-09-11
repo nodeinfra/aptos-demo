@@ -1,0 +1,20 @@
+query MyQuery {
+  token_activities_v2(limit: 10) {
+    after_value
+    before_value
+    entry_function_id_str
+    event_account_address
+    event_index
+    from_address
+    type
+    transaction_version
+    transaction_timestamp
+    token_standard
+    token_data_id
+    token_amount
+    to_address
+    property_version_v1
+    is_fungible_v2
+  }
+}
+
