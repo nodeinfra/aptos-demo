@@ -7,6 +7,7 @@ load_dotenv()
 
 # 환경 변수에서 x-hasura-admin-secret 값을 가져옴
 x_hasura_admin_secret = os.getenv("X_HASURA_ADMIN_SECRET")
+apikey = os.getenv("APIKEY")
 
 # headers = {
 #     'Content-Type': 'application/json',
@@ -20,7 +21,8 @@ def fetch_graphql_data(query, ENDPOINT):
     if ENDPOINT == "https://aptos-mainnet.nodeinfra.com/indexer" :
         headers = {
             'Content-Type': 'application/json',
-            "x-hasura-admin-secret": x_hasura_admin_secret
+            "x-hasura-admin-secret": x_hasura_admin_secret,
+            "apikey": apikey
         }
     else :
         headers = {
